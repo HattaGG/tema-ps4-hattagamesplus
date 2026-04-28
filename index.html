@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PS4 THM KZ</title>
+    <title>PS4 Themes - Hatta Games TV</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -61,15 +61,8 @@
             letter-spacing: 0.5px;
         }
         
-        .by-text {
-            color: #7a8c9e;
-            font-weight: 400;
-        }
-
-        .kizeo-text {
-            color: #4a88c7;
-            font-weight: 500;
-        }
+        .by-text { color: #7a8c9e; font-weight: 400; }
+        .hatta-text { color: #4a88c7; font-weight: 500; }
 
         .social-container {
             position: absolute;
@@ -84,9 +77,7 @@
             height: 32px;
             transition: transform 0.3s ease;
         }
-        .social-icon:hover {
-            transform: scale(1.1);
-        }
+        .social-icon:hover { transform: scale(1.1); }
 
         .toolbar {
             display: flex;
@@ -113,32 +104,12 @@
             border: 1px solid transparent;
             border-top: 1px solid rgba(255, 255, 255, 0.25);
             border-bottom: 1px solid rgba(0, 0, 0, 0.8);
-            border-left: 1px solid rgba(255, 255, 255, 0.05);
-            border-right: 1px solid rgba(0, 0, 0, 0.4);
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
             color: #d1d9e6;
             font-size: 15px;
             font-family: inherit;
             outline: none;
             transition: all 0.3s ease;
-        }
-
-        .search-box:focus {
-            background-color: #1a2840;
-            border-top: 1px solid rgba(88, 166, 255, 0.5);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 15px rgba(88, 166, 255, 0.15); 
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 22px; height: 22px;
-            fill: none;
-            stroke: #8b9db5;
-            stroke-width: 2.5;
-            pointer-events: none;
         }
 
         .filters-container {
@@ -159,7 +130,6 @@
             cursor: pointer;
             outline: none;
             font-family: inherit;
-            font-size: 14px;
         }
 
         .random-button {
@@ -169,23 +139,15 @@
             padding: 5px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease;
         }
 
-        .dado-icon {
-            width: 32px;
-            height: 32px;
-        }
+        .dado-icon { width: 32px; height: 32px; }
 
         @keyframes dice-spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        .spinning {
-            animation: dice-spin 0.5s ease-out;
-        }
+        .spinning { animation: dice-spin 0.5s ease-out; }
 
         main {
             padding: 0 40px 40px 40px;
@@ -203,13 +165,9 @@
             padding: 12px;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
 
-        .card:hover { 
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), inset 0 0 0 1px var(--blue-light); 
-            transform: translateY(-5px); 
-        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); }
 
         .img-wrapper {
             position: relative;
@@ -220,20 +178,9 @@
             background: #000;
         }
 
-        .img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
+        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-        .tags {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            display: flex;
-            gap: 5px;
-        }
+        .tags { position: absolute; bottom: 8px; right: 8px; display: flex; gap: 5px; }
 
         .tag {
             background: rgba(0, 0, 0, 0.75);
@@ -241,9 +188,7 @@
             padding: 3px 8px;
             border-radius: 4px;
             font-size: 11px;
-            font-weight: 500;
             backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .card-title {
@@ -252,17 +197,10 @@
             font-weight: 400;
             color: var(--text-main);
             text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        .btn-group {
-            display: flex;
-            gap: 10px;
-        }
+        .btn-group { display: flex; gap: 10px; }
 
-        /* --- BOTONES CON EFECTOS DE LUZ --- */
         .btn {
             flex: 1;
             padding: 10px 0;
@@ -272,40 +210,10 @@
             font-weight: 500;
             font-size: 13px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden; /* Necesario para el efecto de brillo */
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.3s;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1;
-        }
-
-        /* Efecto de destello (shine) al pasar el cursor */
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
-            transition: all 0.6s;
-            z-index: -1;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        /* Feedback al presionar */
-        .btn:active {
-            transform: scale(0.95);
         }
 
         .btn-preview {
@@ -314,132 +222,43 @@
             border: 1px solid rgba(88, 166, 255, 0.3);
         }
 
-        .btn-preview:hover {
-            background: rgba(88, 166, 255, 0.25);
-            color: white;
-            border-color: var(--blue-light);
-            box-shadow: 0 0 15px var(--glow-preview);
-            text-shadow: 0 0 5px rgba(255,255,255,0.5);
-        }
+        .btn-download { background: var(--blue-dark); color: white; }
 
-        .btn-download {
-            background: var(--blue-dark);
-            color: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .btn-download:hover {
-            background: #0066d6;
-            box-shadow: 0 0 20px var(--glow-download);
-            transform: translateY(-2px);
-        }
-
-        /* ---------------------------------- */
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin: 40px 0 60px 0;
-        }
+        .pagination { display: flex; justify-content: center; gap: 8px; margin: 40px 0 60px 0; }
 
         .page-btn {
             background: rgba(20, 26, 41, 0.8);
             border: 1px solid rgba(255,255,255,0.1);
             color: var(--text-muted);
-            width: 38px;
-            height: 38px;
+            width: 38px; height: 38px;
             border-radius: 8px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            font-family: inherit;
-            font-weight: 500;
         }
 
-        .page-btn:hover:not(:disabled) {
-            background: rgba(255,255,255,0.1);
-            color: white;
-        }
-
-        .page-btn.active {
-            background: var(--blue-light);
-            color: white;
-            border-color: var(--blue-light);
-        }
-
-        .page-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
+        .page-btn.active { background: var(--blue-light); color: white; }
 
         #preview-modal {
-            visibility: hidden;
-            opacity: 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(8px);
+            visibility: hidden; opacity: 0;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+            transition: 0.3s;
         }
 
-        #preview-modal.show {
-            visibility: visible;
-            opacity: 1;
-        }
+        #preview-modal.show { visibility: visible; opacity: 1; }
 
-        #preview-modal img {
-            max-width: 90%;
-            max-height: 85%;
-            border-radius: 12px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
-            border: 2px solid rgba(255,255,255,0.1);
-        }
+        #preview-modal img { max-width: 90%; max-height: 85%; border-radius: 12px; }
 
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 45px;
-            font-weight: 300;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        footer {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 13px;
-            padding-bottom: 30px;
-            opacity: 0.6;
-        }
-
-        @media (max-width: 768px) {
-            header { padding: 20px 15px; }
-            .social-container { position: static; margin-top: 20px; justify-content: center; }
-            main { padding: 0 20px 20px 20px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-            .main-logo { max-width: 320px; }
-        }
+        footer { text-align: center; color: var(--text-muted); font-size: 13px; padding-bottom: 30px; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="logo-container">
-        <img src="https://raw.githubusercontent.com/kizeo0/PS4-THM-KZ/refs/heads/main/recursos/titulo.png" alt="PS4 Themes" class="main-logo">
+        <img src="recursos/titulo.png" alt="PS4 Themes" class="main-logo" onclick="resetToMain()">
         <div class="subtitle">
-            <span class="by-text">by</span> <span class="kizeo-text">KiZeo</span>
+            <span class="by-text">by</span> <span class="hatta-text">Hatta Games TV</span>
         </div>
     </div>
    <div class="social-container">
@@ -451,7 +270,7 @@
 
 <div class="toolbar">
     <div class="search-wrapper">
-        <input type="text" id="search" class="search-box" placeholder="Search Themes...">
+        <input type="text" id="search" class="search-box" placeholder="Search themes...">
     </div>
     <div class="filters-container">
         <select class="custom-select" id="sort-select">
@@ -460,31 +279,29 @@
             <option value="RANDOM">Random</option>
         </select>
         <select class="custom-select" id="cat-select">
-            <option value="ALL">Change Categories</option>
+            <option value="ALL">All Categories</option>
             <option value="DYN">Dynamic</option>
-            <option value="STA">Classic</option>
+            <option value="STA">Static</option>
         </select>
         <button id="random-btn" class="random-button">
-            <img src="recursos/dado.png" alt="Aleatorio" class="dado-icon">
+            <img src="recursos/dado.png" alt="Random" class="dado-icon">
         </button>
     </div>
 </div>
 
 <main id="gallery"></main>
-
 <div id="no-results" style="display:none; text-align:center; padding: 50px;">
-    <h2 style="color: var(--text-muted); font-weight: 400;">No se encontraron temas</h2>
+    <h2 style="color: var(--text-muted);">No themes found</h2>
 </div>
-
 <div class="pagination" id="pagination"></div>
 
 <footer>
-    &copy; 2026 PS4 Themes Library. Todos los derechos reservados.
+    &copy; 2026 Hatta Games TV Library. All rights reserved.
 </footer>
 
 <div id="preview-modal">
-    <span class="close-modal" onclick="closePreview()">&times;</span>
-    <img id="modal-img" src="" alt="Vista Previa Full">
+    <span style="position:absolute; top:20px; right:30px; color:white; font-size:45px; cursor:pointer" onclick="closePreview()">&times;</span>
+    <img id="modal-img" src="">
 </div>
 
 <script>
@@ -504,18 +321,12 @@
     const paginationContainer = document.getElementById('pagination');
     const modal = document.getElementById('preview-modal');
     const modalImg = document.getElementById('modal-img');
-    const noResults = document.getElementById('no-results');
 
     function fixPath(name) {
-        return encodeURIComponent(name)
-            .replace(/'/g, "%27")
-            .replace(/\(/g, "%28")
-            .replace(/\)/g, "%29");
+        return encodeURIComponent(name).replace(/'/g, "%27").replace(/\(/g, "%28").replace(/\)/g, "%29");
     }
 
-    function isDynamic(theme) {
-        return theme.nombre.toLowerCase().includes('dynamic');
-    }
+    function isDynamic(theme) { return theme.nombre.toLowerCase().includes('dynamic'); }
 
     function applyFilters() {
         let temp = allThemes.filter(theme => {
@@ -535,153 +346,63 @@
         render();
     }
 
-    searchInput.addEventListener('input', (e) => {
-        searchText = e.target.value.toLowerCase().trim();
-        applyFilters();
-    });
-
-    catSelect.addEventListener('change', (e) => {
-        currentCategory = e.target.value;
-        applyFilters();
-    });
-
-    sortSelect.addEventListener('change', (e) => {
-        currentSort = e.target.value;
-        applyFilters();
-    });
-
-    randomBtn.addEventListener('click', () => {
-        const icon = randomBtn.querySelector('.dado-icon');
-        icon.classList.add('spinning');
-        setTimeout(() => icon.classList.remove('spinning'), 500);
-        
-        currentSort = 'RANDOM';
-        sortSelect.value = 'RANDOM';
-        applyFilters();
-    });
+    searchInput.addEventListener('input', (e) => { searchText = e.target.value.toLowerCase().trim(); applyFilters(); });
+    catSelect.addEventListener('change', (e) => { currentCategory = e.target.value; applyFilters(); });
+    sortSelect.addEventListener('change', (e) => { currentSort = e.target.value; applyFilters(); });
+    randomBtn.addEventListener('click', () => { applyFilters(); });
 
     async function init() {
         try {
             const response = await fetch('./temas.json');
             allThemes = await response.json();
-            allThemes.sort((a, b) => a.nombre.localeCompare(b.nombre));
-            filteredThemes = [...allThemes];
-            render();
-        } catch (err) {
-            console.error("Error cargando temas:", err);
-            gallery.innerHTML = '<p>Error al cargar la galería.</p>';
-        }
+            applyFilters();
+        } catch (err) { console.error("Error loading themes:", err); }
     }
 
     function render() {
         gallery.innerHTML = '';
-        if (filteredThemes.length === 0) {
-            noResults.style.display = 'block';
-            paginationContainer.innerHTML = '';
-            return;
-        } else {
-            noResults.style.display = 'none';
-        }
+        if (filteredThemes.length === 0) { document.getElementById('no-results').style.display = 'block'; return; }
+        document.getElementById('no-results').style.display = 'none';
 
-        const totalPages = Math.ceil(filteredThemes.length / itemsPerPage);
-        if (currentPage > totalPages) currentPage = totalPages;
-        
         const start = (currentPage - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        const items = filteredThemes.slice(start, end);
+        const items = filteredThemes.slice(start, start + itemsPerPage);
 
         items.forEach(tema => {
             const card = document.createElement('div');
             card.className = 'card';
-            
             const imgFileName = fixPath(tema.nombre) + ".webp";
-            const thumbUrl = `./Images/640/${imgFileName}`;
-            const fullUrl = `./Images/${imgFileName}`;
-            
-            const dynamic = isDynamic(tema);
-            const tagText = dynamic ? 'Dinámico' : 'Estático';
-
             card.innerHTML = `
                 <div class="img-wrapper">
-                    <img src="${thumbUrl}" alt="${tema.nombre}" loading="lazy" onerror="this.src='https://placehold.co/600x337/161b22/8b949e?text=No+Image'">
-                    <div class="tags">
-                        <span class="tag">[${tagText}]</span>
-                        <span class="tag">[PS4]</span>
-                    </div>
+                    <img src="./Images/640/${imgFileName}" loading="lazy" onerror="this.src='https://placehold.co/600x337/161b22/8b949e?text=No+Image'">
+                    <div class="tags"><span class="tag">[${isDynamic(tema)?'Dynamic':'Static'}]</span></div>
                 </div>
-                <h3 class="card-title" title="${tema.nombre}">${tema.nombre}</h3>
+                <h3 class="card-title">${tema.nombre}</h3>
                 <div class="btn-group">
-                    <button class="btn btn-preview" onclick="showPreview('${fullUrl.replace(/'/g, "\\'")}')">Vista previa</button>
-                    <button class="btn btn-download" onclick="window.open('${tema.descarga.replace(/'/g, "\\'")}', '_blank')">Descargar</button>
+                    <button class="btn btn-preview" onclick="showPreview('./Images/${imgFileName}')">Preview</button>
+                    <button class="btn btn-download" onclick="window.open('${tema.descarga}', '_blank')">Download</button>
                 </div>
             `;
             gallery.appendChild(card);
         });
-
-        renderPagination(totalPages);
+        renderPagination();
     }
 
-    function renderPagination(totalPages) {
+    function renderPagination() {
         paginationContainer.innerHTML = '';
+        const totalPages = Math.ceil(filteredThemes.length / itemsPerPage);
         if (totalPages <= 1) return;
-
-        const prevBtn = document.createElement('button');
-        prevBtn.className = 'page-btn';
-        prevBtn.innerHTML = '&lt;';
-        prevBtn.disabled = currentPage === 1;
-        prevBtn.onclick = () => { currentPage--; render(); window.scrollTo({top: 0, behavior: 'smooth'}); };
-        paginationContainer.appendChild(prevBtn);
-
-        const maxVisible = 5;
-        let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
-        let endPage = Math.min(totalPages, startPage + maxVisible - 1);
-        
-        if (endPage - startPage + 1 < maxVisible) {
-            startPage = Math.max(1, endPage - maxVisible + 1);
-        }
-
-        for (let i = startPage; i <= endPage; i++) {
+        for (let i = 1; i <= totalPages; i++) {
             const btn = document.createElement('button');
             btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
             btn.textContent = i;
-            btn.onclick = () => { currentPage = i; render(); window.scrollTo({top: 0, behavior: 'smooth'}); };
+            btn.onclick = () => { currentPage = i; render(); window.scrollTo(0,0); };
             paginationContainer.appendChild(btn);
         }
-
-        const nextBtn = document.createElement('button');
-        nextBtn.className = 'page-btn';
-        nextBtn.innerHTML = '&gt;';
-        nextBtn.disabled = currentPage === totalPages;
-        nextBtn.onclick = () => { currentPage++; render(); window.scrollTo({top: 0, behavior: 'smooth'}); };
-        paginationContainer.appendChild(nextBtn);
     }
 
     function showPreview(url) { modalImg.src = url; modal.classList.add('show'); }
-    function closePreview() { modal.classList.remove('show'); setTimeout(() => { modalImg.src = ''; }, 300); }
-    modal.addEventListener('click', (e) => { if (e.target === modal) closePreview(); });
-
+    function closePreview() { modal.classList.remove('show'); }
     init();
-
-    function resetToMain() {
-        if (!allThemes.length) return;
-        searchText = '';
-        searchInput.value = '';
-        currentCategory = 'ALL';
-        catSelect.value = 'ALL';
-        currentSort = 'AZ';
-        sortSelect.value = 'AZ';
-        filteredThemes = [...allThemes].sort((a, b) => a.nombre.localeCompare(b.nombre));
-        currentPage = 1;
-        render();
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const logo = document.querySelector('.main-logo');
-        if (logo) {
-            logo.addEventListener('click', resetToMain);
-        }
-    });
 </script>
-
 </body>
 </html>
