@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PS4 Themes - Hatta Games TV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-top: #1a2942; 
+            --bg-bottom: #0b111c;
+            --text-main: #f0f6fc;
+            --text-muted: #8b9db5; 
+            --blue-light: #58a6ff;
+            --blue-dark: #0056b3;
+            --border-color: rgba(255,255,255,0.05);
+            --bg-card: rgba(20, 26, 41, 0.7);
+            --glow-blue: rgba(88, 166, 255, 0.4);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            background: radial-gradient(ellipse at top center, var(--bg-top) 0%, var(--bg-bottom) 100%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0; min-height: 100vh;
+        }
+
+        header { display: flex; flex-direction: column; align-items: center; padding: 30px 20px; position: relative; }
+        .logo-container { display: flex; flex-direction: column; align-items: flex-end; cursor: pointer; }
+        .main-logo { width: 100%; max-width: 450px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+        .subtitle { margin-top: -12px; margin-right: 18px; font-size: 0.95rem; }
+        .by-text { color: #7a8c9e; }
+        .hatta-text { color: #4a88c7; font-weight: 500; }
+
+        .social-container { position: absolute; right: 40px; top: 40px; display: flex; gap: 15px; }
+        .social-icon { width: 32px; transition: 0.3s; }
+        .social-icon:hover { transform: scale(1.1); }
+
+        .toolbar { display: flex; flex-direction: column; align-items: center; gap: 20px; margin: 20px 0 40px 0; }
+        .search-box { 
+            width: 90%; max-width: 600px; padding: 14px 25px; border-radius: 30px; 
+            background: #172236; border: 1px solid rgba(255,255,255,0.1); color: white; outline: none;
+        }
+
+        main {
+            padding: 0 40px 40px 40px; display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 25px; max-width: 1600px; margin: 0 auto;
+        }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 12px; transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 0 20px var(--glow-blue); }
+
+        .img-wrapper { position: relative; aspect-ratio: 16/9; border-radius: 10px; overflow: hidden; background: #000; }
+        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .tag { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7); padding: 3px 8px; border-radius: 4px; font-size: 11px; }
+
+        .card-title { margin: 15px 0; font-size: 15px; text-align: center; }
+        .btn-group { display: flex; gap: 10px; }
+        .btn { flex: 1; padding: 10px; border-radius: 20px; border: none; cursor: pointer; transition: 0.3s; font-size: 13px; }
+        .btn-preview { background: rgba(88,166,255,0.1); color: var(--blue-light); border: 1px solid var(--blue-light); }
+        .btn-download { background: var(--blue-dark); color: white; }
+
+        /* PAGINATION STYLING (Maksimal 5) */
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 40px 0 60px 0; }
+        .page-btn {
+            background: rgba(20, 26, 41, 0.8); border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted); width: 40px; height: 40px; border-radius: 8px; cursor: pointer;
+            display: flex; justify-content: center; align-items: center; font-weight: 600;
+        }
+        .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .page-btn.active { background: var(--blue-light); color: white; border-color: var(--blue-light); }
+
+        footer { text-align: center; color: var(--text-muted); font-size: 13px; padding-bottom: 30px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-container" onclick="resetToMain()">
+        <img src="recursos/titulo.png" alt="PS4 Themes" class="main-logo">
+        <div class="subtitle">
+            <span class="by-text">by</span> <span class="hatta-text">Hatta Games TV</span>
+        </div>
+    </div>
+    <div class="social-container">
+        <a href="https://www.youtube.com/@hattagamesplus" target="_blank"><img src="recursos/yt.png" alt="YT" class="social-icon"></a>
+        <a href="https://github.com/hattagamesplus" target="_blank"><img src="recursos/git.png" alt="Git" class="social-icon"></a>
+        <a href="https://paypal.me/hattapahlevii" target="_blank"><img src="recursos/x.png" alt="X" class="social-icon"></a>
+    </div>
+</header>
+
+<div class="toolbar">
+    <input type="text" id="search" class="search-box" placeholder="Search themes...">
+</div>
+
+<main id="gallery"></main>
+<div class="pagination" id="pagination"></div>
+
+<footer>Powered by Hatta Games TV</footer>
+
+<script>
+    let allThemes = [];
+    let filteredThemes = [];
+    let currentPage = 1;
+    const itemsPerPage = 12;
+
+    async function init() {
+        const response = await fetch('./temas.json');
+        allThemes = await response.json();
+        filteredThemes = [...allThemes];
+        render();
+    }
+
+    function render() {
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = '';
+        
+        const start = (currentPage - 1) * itemsPerPage;
+        const items = filteredThemes.slice(start, start + itemsPerPage);
+
+        items.forEach(tema => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            const isDyn = tema.nombre.toLowerCase().includes('dynamic');
+            card.innerHTML = `
+                <div class="img-wrapper">
+                    <img src="./Images/640/${encodeURIComponent(tema.nombre)}.webp" loading="lazy">
+                    <div class="tag">[${isDyn ? 'Dynamic' : 'Static'}]</div>
+                </div>
+                <h3 class="card-title">${tema.nombre}</h3>
+                <div class="btn-group">
+                    <button class="btn btn-preview" onclick="alert('Previewing: '+ '${tema.nombre}')">Preview</button>
+                    <button class="btn btn-download" onclick="window.open('${tema.descarga}', '_blank')">Download</button>
+                </div>
+            `;
+            gallery.appendChild(card);
+        });
+        renderPagination();
+    }
+
+    // LOGIKA PAGINATION MAKSIMAL 5 ANGKA
+    function renderPagination() {
+        const container = document.getElementById('pagination');
+        container.innerHTML = '';
+        const totalPages = Math.ceil(filteredThemes.length / itemsPerPage);
+        if (totalPages <= 1) return;
+
+        // Tombol Back (<)
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'page-btn';
+        prevBtn.innerHTML = '❮';
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.onclick = () => { currentPage--; render(); window.scrollTo(0,0); };
+        container.appendChild(prevBtn);
+
+        // Hitung range angka (Maksimal 5 angka)
+        let startPage = Math.max(1, currentPage - 2);
+        let endPage = Math.min(totalPages, startPage + 4);
+
+        if (endPage - startPage < 4) {
+            startPage = Math.max(1, endPage - 4);
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            const btn = document.createElement('button');
+            btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+            btn.textContent = i;
+            btn.onclick = () => { currentPage = i; render(); window.scrollTo(0,0); };
+            container.appendChild(btn);
+        }
+
+        // Tombol Next (>)
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'page-btn';
+        nextBtn.innerHTML = '❯';
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.onclick = () => { currentPage++; render(); window.scrollTo(0,0); };
+        container.appendChild(nextBtn);
+    }
+
+    function resetToMain() {
+        currentPage = 1;
+        filteredThemes = [...allThemes];
+        document.getElementById('search').value = '';
+        render();
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    document.getElementById('search').addEventListener('input', (e) => {
+        const val = e.target.value.toLowerCase();
+        filteredThemes = allThemes.filter(t => t.nombre.toLowerCase().includes(val));
+        currentPage = 1;
+        render();
+    });
+
+    init();
+</script>
+</body>
+</html>
