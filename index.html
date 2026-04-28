@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PS4 THEME- Hatta Games TV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-top: #1a2942; 
+            --bg-bottom: #0b111c;
+            --text-main: #f0f6fc;
+            --text-muted: #8b9db5; 
+            --blue-light: #58a6ff;
+            --blue-dark: #0056b3;
+            --border-color: rgba(255,255,255,0.05);
+            --bg-card: rgba(20, 26, 41, 0.7);
+            --glow-preview: rgba(88, 166, 255, 0.5);
+            --glow-download: rgba(0, 86, 179, 0.6);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background: radial-gradient(ellipse at top center, var(--bg-top) 0%, var(--bg-bottom) 100%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding-bottom: 50px;
+        }
+
+        header {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .main-logo {
+            font-size: 2.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
+            margin-bottom: 5px;
+        }
+
+        .author {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-links a img {
+            width: 24px;
+            height: 24px;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover img {
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            display: flex;
+            gap: 10px;
+            padding: 0 20px;
+        }
+
+        input, select {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px 18px;
+            border-radius: 8px;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        input { flex: 1; }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s ease;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        .card-img-container {
+            position: relative;
+            aspect-ratio: 16/9;
+            cursor: pointer;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-info { padding: 18px; }
+
+        .card-title {
+            font-weight: 500;
+            margin-bottom: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            text-decoration: none;
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .btn-preview { border: 1px solid var(--blue-light); color: var(--blue-light); }
+        .btn-preview:hover { background: var(--blue-light); color: white; }
+
+        .btn-download { background: var(--blue-dark); color: white; }
+        .btn-download:hover { background: #0066cc; }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 40px;
+        }
+
+        .page-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .page-btn.active { background: var(--blue-light); border-color: var(--blue-light); }
+
+        /* Modal Preview */
+        .modal {
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+        }
+        .modal.show { opacity: 1; pointer-events: auto; }
+        .modal img { max-width: 90%; max-height: 85%; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="main-logo" onclick="resetToMain()">PS4 THEMES</div>
+    <div class="author">by Hatta Games TV</div>
+
+    <div class="social-links">
+        <a href="https://paypal.me/hattapahlevii" target="_blank"><img src="Images/x.png" alt="Donate"></a>
+        <a href="https://www.hattagamesplus.com" target="_blank"><img src="Images/git.png" alt="Website"></a>
+        <a href="https://www.youtube.com/@HattaGamesPlus" target="_blank"><img src="Images/yt.png" alt="YouTube"></a>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search themes...">
+        <select id="catSelect">
+            <option value="ALL">All Categories</option>
+            <option value="Games">Games</option>
+            <option value="Anime">Anime</option>
+            <option value="Movies">Movies</option>
+            <option value="Others">Others</option>
+        </select>
+        <select id="sortSelect">
+            <option value="AZ">A-Z</option>
+            <option value="ZA">Z-A</option>
+        </select>
+    </div>
+</header>
+
+<div id="themesGrid" class="themes-grid"></div>
+<div id="pagination" class="pagination"></div>
+
+<div id="modal" class="modal"><img id="modalImg" src=""></div>
+
+<script>
+    let allThemes = [];
+    let filteredThemes = [];
+    let currentPage = 1;
+    const itemsPerPage = 12;
+    let searchText = '';
+    let currentCategory = 'ALL';
+    let currentSort = 'AZ';
+
+    const themesGrid = document.getElementById('themesGrid');
+    const paginationContainer = document.getElementById('pagination');
+    const searchInput = document.getElementById('searchInput');
+    const catSelect = document.getElementById('catSelect');
+    const sortSelect = document.getElementById('sortSelect');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+
+    async function init() {
+        try {
+            const response = await fetch('temas.json');
+            allThemes = await response.json();
+            applyFilters();
+        } catch (e) {
+            console.error("Error loading temas.json", e);
+        }
+    }
+
+    function applyFilters() {
+        filteredThemes = allThemes.filter(t => {
+            const matchesSearch = t.nombre.toLowerCase().includes(searchText.toLowerCase());
+            const matchesCat = currentCategory === 'ALL' || t.categoria === currentCategory;
+            return matchesSearch && matchesCat;
+        });
+
+        if (currentSort === 'AZ') filteredThemes.sort((a,b) => a.nombre.localeCompare(b.nombre));
+        else filteredThemes.sort((a,b) => b.nombre.localeCompare(a.nombre));
+
+        currentPage = 1;
+        render();
+    }
+
+    searchInput.oninput = (e) => { searchText = e.target.value; applyFilters(); };
+    catSelect.onchange = (e) => { currentCategory = e.target.value; applyFilters(); };
+    sortSelect.onchange = (e) => { currentSort = e.target.value; applyFilters(); };
+
+    function render() {
+        themesGrid.innerHTML = '';
+        const start = (currentPage - 1) * itemsPerPage;
+        const pageItems = filteredThemes.slice(start, start + itemsPerPage);
+
+        pageItems.forEach(t => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-img-container" onclick="showPreview('${t.preview}')">
+                    <img class="card-img" src="${t.preview}" loading="lazy">
+                </div>
+                <div class="card-info">
+                    <div class="card-title">${t.nombre}</div>
+                    <div class="card-btns">
+                        <a href="javascript:void(0)" class="btn btn-preview" onclick="showPreview('${t.preview}')">Preview</a>
+                        <a href="${t.download}" class="btn btn-download" target="_blank">Download</a>
+                    </div>
+                </div>
+            `;
+            themesGrid.appendChild(card);
+        });
+        renderPagination();
+    }
+
+    function renderPagination() {
+        paginationContainer.innerHTML = '';
+        const totalPages = Math.ceil(filteredThemes.length / itemsPerPage);
+        if (totalPages <= 1) return;
+
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement('button');
+            btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+            btn.textContent = i;
+            btn.onclick = () => { currentPage = i; render(); window.scrollTo({top: 0, behavior: 'smooth'}); };
+            paginationContainer.appendChild(btn);
+        }
+    }
+
+    function showPreview(url) { modalImg.src = url; modal.classList.add('show'); }
+    modal.onclick = () => modal.classList.remove('show');
+
+    function resetToMain() {
+        searchText = '';
+        searchInput.value = '';
+        currentCategory = 'ALL';
+        catSelect.value = 'ALL';
+        applyFilters();
+    }
+
+    init();
+</script>
+
+</body>
+</html>
