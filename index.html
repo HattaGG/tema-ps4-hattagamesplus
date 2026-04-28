@@ -29,6 +29,13 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            /* EFEK TRANSISI HALUS SAAT HALAMAN DI-LOAD */
+            animation: fadeInPage 0.8s ease-in-out;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         header {
@@ -44,6 +51,8 @@
             flex-direction: column;
             align-items: flex-end;
             position: relative;
+            cursor: pointer;
+            text-decoration: none; /* Menghapus garis bawah link */
         }
 
         .main-logo { 
@@ -51,7 +60,11 @@
             max-width: 450px; 
             display: block;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); 
-            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover .main-logo {
+            transform: scale(1.02); /* Efek sedikit membesar saat logo dihover */
         }
 
         .subtitle {
@@ -89,65 +102,23 @@
             padding: 0 20px;
         }
 
-        .search-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            z-index: 10;
-        }
-
         .search-box {
             width: 100%;
-            padding: 14px 45px 14px 25px;
+            max-width: 600px;
+            padding: 14px 25px;
             border-radius: 30px;
             background-color: #172236;
-            border: 1px solid transparent;
-            border-top: 1px solid rgba(255, 255, 255, 0.25);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.8);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #d1d9e6;
             font-size: 15px;
-            font-family: inherit;
             outline: none;
             transition: all 0.3s ease;
         }
 
-        .filters-container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-            z-index: 5;
-            flex-wrap: wrap;
+        .search-box:focus {
+            border-color: var(--blue-light);
+            box-shadow: 0 0 15px rgba(88, 166, 255, 0.2);
         }
-
-        .custom-select {
-            background: rgba(20, 29, 46, 0.6);
-            color: #8b9db5;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            outline: none;
-            font-family: inherit;
-        }
-
-        .random-button {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 5px;
-            display: flex;
-            align-items: center;
-        }
-
-        .dado-icon { width: 32px; height: 32px; }
-
-        @keyframes dice-spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .spinning { animation: dice-spin 0.5s ease-out; }
 
         main {
             padding: 0 40px 40px 40px;
@@ -163,11 +134,15 @@
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 12px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             backdrop-filter: blur(10px);
         }
 
-        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); }
+        .card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border-color: rgba(88, 166, 255, 0.3);
+        }
 
         .img-wrapper {
             position: relative;
@@ -180,15 +155,13 @@
 
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-        .tags { position: absolute; bottom: 8px; right: 8px; display: flex; gap: 5px; }
-
         .tag {
+            position: absolute; bottom: 8px; right: 8px;
             background: rgba(0, 0, 0, 0.75);
             color: white;
             padding: 3px 8px;
             border-radius: 4px;
             font-size: 11px;
-            backdrop-filter: blur(4px);
         }
 
         .card-title {
@@ -210,19 +183,31 @@
             font-weight: 500;
             font-size: 13px;
             cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            transition: all 0.3s ease;
         }
 
+        /* EFEK GLOW PADA TOMBOL PREVIEW */
         .btn-preview {
             background: rgba(88, 166, 255, 0.1);
             color: var(--blue-light);
             border: 1px solid rgba(88, 166, 255, 0.3);
         }
+        .btn-preview:hover {
+            background: var(--blue-light);
+            color: #000;
+            box-shadow: 0 0 15px var(--glow-preview);
+        }
 
-        .btn-download { background: var(--blue-dark); color: white; }
+        /* EFEK GLOW PADA TOMBOL DOWNLOAD */
+        .btn-download {
+            background: var(--blue-dark);
+            color: white;
+        }
+        .btn-download:hover {
+            background: #007bff;
+            box-shadow: 0 0 20px var(--glow-download);
+            transform: scale(1.02);
+        }
 
         .pagination { display: flex; justify-content: center; gap: 8px; margin: 40px 0 60px 0; }
 
@@ -233,154 +218,76 @@
             width: 38px; height: 38px;
             border-radius: 8px;
             cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .page-btn.active { background: var(--blue-light); color: white; }
-
-        #preview-modal {
-            visibility: hidden; opacity: 0;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9); z-index: 1000;
-            display: flex; justify-content: center; align-items: center;
-            transition: 0.3s;
+        .page-btn.active { 
+            background: var(--blue-light); 
+            color: white; 
+            box-shadow: 0 0 10px var(--glow-preview);
         }
 
-        #preview-modal.show { visibility: visible; opacity: 1; }
-
-        #preview-modal img { max-width: 90%; max-height: 85%; border-radius: 12px; }
-
-        footer { text-align: center; color: var(--text-muted); font-size: 13px; padding-bottom: 30px; }
+        footer { text-align: center; color: var(--text-muted); font-size: 13px; padding: 30px 0; border-top: 1px solid var(--border-color); }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-container">
-        <img src="recursos/titulo.png" alt="PS4 Themes" class="main-logo" onclick="resetToMain()">
+    <a href="index.html" class="logo-container">
+        <img src="recursos/titulo.png" alt="PS4 Themes" class="main-logo">
         <div class="subtitle">
             <span class="by-text">by</span> <span class="hatta-text">Hatta Games TV</span>
         </div>
-    </div>
+    </a>
    <div class="social-container">
         <a href="https://www.youtube.com/@hattagamesplus" target="_blank"><img src="recursos/yt.png" alt="YT" class="social-icon"></a>
-        <a href="https://www.hattagamesplus.com" target="_blank"><img src="recursos/git.png" alt="Git" class="social-icon"></a>
+        <a href="https://github.com/hattagames" target="_blank"><img src="recursos/git.png" alt="Git" class="social-icon"></a>
         <a href="https://paypal.me/hattapahlevii" target="_blank"><img src="recursos/x.png" alt="X" class="social-icon"></a>
     </div>
 </header>
 
 <div class="toolbar">
-    <div class="search-wrapper">
-        <input type="text" id="search" class="search-box" placeholder="Search themes...">
-    </div>
-    <div class="filters-container">
-        <select class="custom-select" id="sort-select">
-            <option value="AZ">A-Z</option>
-            <option value="ZA">Z-A</option>
-            <option value="RANDOM">Random</option>
-        </select>
-        <select class="custom-select" id="cat-select">
-            <option value="ALL">All Categories</option>
-            <option value="DYN">Dynamic</option>
-            <option value="STA">Static</option>
-        </select>
-        <button id="random-btn" class="random-button">
-            <img src="recursos/dado.png" alt="Random" class="dado-icon">
-        </button>
-    </div>
+    <input type="text" id="search" class="search-box" placeholder="Search themes...">
 </div>
 
 <main id="gallery"></main>
-<div id="no-results" style="display:none; text-align:center; padding: 50px;">
-    <h2 style="color: var(--text-muted);">No themes found</h2>
-</div>
 <div class="pagination" id="pagination"></div>
 
 <footer>
     Powered by Hatta Games TV
 </footer>
 
-<div id="preview-modal">
-    <span style="position:absolute; top:20px; right:30px; color:white; font-size:45px; cursor:pointer" onclick="closePreview()">&times;</span>
-    <img id="modal-img" src="">
-</div>
-
 <script>
     let allThemes = [];
     let filteredThemes = [];
     let currentPage = 1;
     const itemsPerPage = 12;
-    let searchText = '';
-    let currentCategory = 'ALL';
-    let currentSort = 'AZ';
 
-    const gallery = document.getElementById('gallery');
-    const searchInput = document.getElementById('search');
-    const sortSelect = document.getElementById('sort-select');
-    const catSelect = document.getElementById('cat-select');
-    const randomBtn = document.getElementById('random-btn');
-    const paginationContainer = document.getElementById('pagination');
-    const modal = document.getElementById('preview-modal');
-    const modalImg = document.getElementById('modal-img');
-
-    function fixPath(name) {
-        return encodeURIComponent(name).replace(/'/g, "%27").replace(/\(/g, "%28").replace(/\)/g, "%29");
-    }
-
-    // Nama kategori diubah ke bahasa Inggris
-    function isDynamic(theme) { return theme.nombre.toLowerCase().includes('dynamic'); }
-
-    function applyFilters() {
-        let temp = allThemes.filter(theme => {
-            const matchesCat = (currentCategory === 'ALL') || 
-                               (currentCategory === 'DYN' && isDynamic(theme)) || 
-                               (currentCategory === 'STA' && !isDynamic(theme));
-            const matchesSearch = theme.nombre.toLowerCase().includes(searchText);
-            return matchesSearch && matchesCat;
-        });
-
-        if (currentSort === 'AZ') temp.sort((a, b) => a.nombre.localeCompare(b.nombre));
-        else if (currentSort === 'ZA') temp.sort((a, b) => b.nombre.localeCompare(a.nombre));
-        else if (currentSort === 'RANDOM') temp.sort(() => Math.random() - 0.5);
-
-        filteredThemes = temp;
-        currentPage = 1;
+    async function init() {
+        const response = await fetch('./temas.json');
+        allThemes = await response.json();
+        filteredThemes = [...allThemes];
         render();
     }
 
-    searchInput.addEventListener('input', (e) => { searchText = e.target.value.toLowerCase().trim(); applyFilters(); });
-    catSelect.addEventListener('change', (e) => { currentCategory = e.target.value; applyFilters(); });
-    sortSelect.addEventListener('change', (e) => { currentSort = e.target.value; applyFilters(); });
-    randomBtn.addEventListener('click', () => { applyFilters(); });
-
-    async function init() {
-        try {
-            const response = await fetch('./temas.json');
-            allThemes = await response.json();
-            applyFilters();
-        } catch (err) { console.error("Error loading themes:", err); }
-    }
-
     function render() {
+        const gallery = document.getElementById('gallery');
         gallery.innerHTML = '';
-        if (filteredThemes.length === 0) { document.getElementById('no-results').style.display = 'block'; return; }
-        document.getElementById('no-results').style.display = 'none';
-
         const start = (currentPage - 1) * itemsPerPage;
         const items = filteredThemes.slice(start, start + itemsPerPage);
 
         items.forEach(tema => {
             const card = document.createElement('div');
             card.className = 'card';
-            const imgFileName = fixPath(tema.nombre) + ".webp";
-            // Tombol dan tag sudah dalam bahasa Inggris
+            const isDynamic = tema.nombre.toLowerCase().includes('dynamic');
             card.innerHTML = `
                 <div class="img-wrapper">
-                    <img src="./Images/640/${imgFileName}" loading="lazy" onerror="this.src='https://placehold.co/600x337/161b22/8b949e?text=No+Image'">
-                    <div class="tags"><span class="tag">[${isDynamic(tema)?'Dynamic':'Static'}]</span></div>
+                    <img src="./Images/640/${encodeURIComponent(tema.nombre)}.webp" loading="lazy">
+                    <div class="tag">${isDynamic ? 'Dynamic' : 'Static'}</div>
                 </div>
                 <h3 class="card-title">${tema.nombre}</h3>
                 <div class="btn-group">
-                    <button class="btn btn-preview" onclick="showPreview('./Images/${imgFileName}')">Preview</button>
+                    <button class="btn btn-preview" onclick="window.open('./Images/${encodeURIComponent(tema.nombre)}.webp', '_blank')">Preview</button>
                     <button class="btn btn-download" onclick="window.open('${tema.descarga}', '_blank')">Download</button>
                 </div>
             `;
@@ -390,20 +297,25 @@
     }
 
     function renderPagination() {
-        paginationContainer.innerHTML = '';
-        const totalPages = Math.ceil(filteredThemes.length / itemsPerPage);
-        if (totalPages <= 1) return;
-        for (let i = 1; i <= totalPages; i++) {
+        const container = document.getElementById('pagination');
+        container.innerHTML = '';
+        const pages = Math.ceil(filteredThemes.length / itemsPerPage);
+        for (let i = 1; i <= pages; i++) {
             const btn = document.createElement('button');
             btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
             btn.textContent = i;
-            btn.onclick = () => { currentPage = i; render(); window.scrollTo(0,0); };
-            paginationContainer.appendChild(btn);
+            btn.onclick = () => { currentPage = i; render(); window.scrollTo({top: 0, behavior: 'smooth'}); };
+            container.appendChild(btn);
         }
     }
 
-    function showPreview(url) { modalImg.src = url; modal.classList.add('show'); }
-    function closePreview() { modal.classList.remove('show'); }
+    document.getElementById('search').addEventListener('input', (e) => {
+        const text = e.target.value.toLowerCase();
+        filteredThemes = allThemes.filter(t => t.nombre.toLowerCase().includes(text));
+        currentPage = 1;
+        render();
+    });
+
     init();
 </script>
 </body>
