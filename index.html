@@ -62,11 +62,24 @@
 
         .card-title { margin: 15px 0; font-size: 15px; text-align: center; }
         .btn-group { display: flex; gap: 10px; }
-        .btn { flex: 1; padding: 10px; border-radius: 20px; border: none; cursor: pointer; transition: 0.3s; font-size: 13px; }
-        .btn-preview { background: rgba(88,166,255,0.1); color: var(--blue-light); border: 1px solid var(--blue-light); }
+        .btn { flex: 1; padding: 10px; border-radius: 20px; border: none; cursor: pointer; transition: 0.3s; font-size: 13px; font-family: inherit; }
+        
+        .btn-preview { 
+            background: rgba(88,166,255,0.1); color: var(--blue-light); border: 1px solid var(--blue-light); 
+        }
+        .btn-preview:hover { box-shadow: 0 0 15px rgba(88, 166, 255, 0.5); }
+        
         .btn-download { background: var(--blue-dark); color: white; }
+        .btn-download:hover { box-shadow: 0 0 15px rgba(0, 86, 179, 0.6); }
 
-        /* PAGINATION STYLING (Maksimal 5) */
+        /* MODAL PREVIEW STYLE */
+        #preview-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center;
+        }
+        #preview-modal img { max-width: 90%; max-height: 80%; border-radius: 10px; box-shadow: 0 0 30px rgba(88, 166, 255, 0.4); }
+        .close-modal { position: absolute; top: 20px; right: 30px; font-size: 40px; color: white; cursor: pointer; }
+
         .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 40px 0 60px 0; }
         .page-btn {
             background: rgba(20, 26, 41, 0.8); border: 1px solid rgba(255,255,255,0.1);
@@ -90,7 +103,7 @@
     </div>
     <div class="social-container">
         <a href="https://www.youtube.com/@hattagamesplus" target="_blank"><img src="recursos/yt.png" alt="YT" class="social-icon"></a>
-        <a href="https://www.hattagamesplus.com" target="_blank"><img src="recursos/git.png" alt="Git" class="social-icon"></a>
+        <a href="https://www.hattagamesplus.com/" target="_blank"><img src="recursos/git.png" alt="Git" class="social-icon"></a>
         <a href="https://paypal.me/hattapahlevii" target="_blank"><img src="recursos/x.png" alt="X" class="social-icon"></a>
     </div>
 </header>
@@ -103,6 +116,11 @@
 <div class="pagination" id="pagination"></div>
 
 <footer>Powered by Hatta Games TV</footer>
+
+<div id="preview-modal">
+    <span class="close-modal" onclick="closePreview()">&times;</span>
+    <img id="modal-img" src="">
+</div>
 
 <script>
     let allThemes = [];
@@ -128,6 +146,8 @@
             const card = document.createElement('div');
             card.className = 'card';
             const isDyn = tema.nombre.toLowerCase().includes('dynamic');
+            const imgPath = `./Images/${encodeURIComponent(tema.nombre)}.webp`;
+            
             card.innerHTML = `
                 <div class="img-wrapper">
                     <img src="./Images/640/${encodeURIComponent(tema.nombre)}.webp" loading="lazy">
@@ -135,7 +155,7 @@
                 </div>
                 <h3 class="card-title">${tema.nombre}</h3>
                 <div class="btn-group">
-                    <button class="btn btn-preview" onclick="alert('Previewing: '+ '${tema.nombre}')">Preview</button>
+                    <button class="btn btn-preview" onclick="showPreview('${imgPath}')">Preview</button>
                     <button class="btn btn-download" onclick="window.open('${tema.descarga}', '_blank')">Download</button>
                 </div>
             `;
@@ -144,14 +164,12 @@
         renderPagination();
     }
 
-    // LOGIKA PAGINATION MAKSIMAL 5 ANGKA
     function renderPagination() {
         const container = document.getElementById('pagination');
         container.innerHTML = '';
         const totalPages = Math.ceil(filteredThemes.length / itemsPerPage);
         if (totalPages <= 1) return;
 
-        // Tombol Back (<)
         const prevBtn = document.createElement('button');
         prevBtn.className = 'page-btn';
         prevBtn.innerHTML = '❮';
@@ -159,13 +177,9 @@
         prevBtn.onclick = () => { currentPage--; render(); window.scrollTo(0,0); };
         container.appendChild(prevBtn);
 
-        // Hitung range angka (Maksimal 5 angka)
         let startPage = Math.max(1, currentPage - 2);
         let endPage = Math.min(totalPages, startPage + 4);
-
-        if (endPage - startPage < 4) {
-            startPage = Math.max(1, endPage - 4);
-        }
+        if (endPage - startPage < 4) startPage = Math.max(1, endPage - 4);
 
         for (let i = startPage; i <= endPage; i++) {
             const btn = document.createElement('button');
@@ -175,13 +189,21 @@
             container.appendChild(btn);
         }
 
-        // Tombol Next (>)
         const nextBtn = document.createElement('button');
         nextBtn.className = 'page-btn';
         nextBtn.innerHTML = '❯';
         nextBtn.disabled = currentPage === totalPages;
         nextBtn.onclick = () => { currentPage++; render(); window.scrollTo(0,0); };
         container.appendChild(nextBtn);
+    }
+
+    function showPreview(url) {
+        document.getElementById('modal-img').src = url;
+        document.getElementById('preview-modal').style.display = 'flex';
+    }
+
+    function closePreview() {
+        document.getElementById('preview-modal').style.display = 'none';
     }
 
     function resetToMain() {
