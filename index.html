@@ -296,7 +296,7 @@
 <div class="pagination" id="pagination"></div>
 
 <footer>
-    &copy; 2026 Hatta Games TV Library. All rights reserved.
+    Powered by Hatta Games TV
 </footer>
 
 <div id="preview-modal">
@@ -326,6 +326,7 @@
         return encodeURIComponent(name).replace(/'/g, "%27").replace(/\(/g, "%28").replace(/\)/g, "%29");
     }
 
+    // Nama kategori diubah ke bahasa Inggris
     function isDynamic(theme) { return theme.nombre.toLowerCase().includes('dynamic'); }
 
     function applyFilters() {
@@ -334,7 +335,7 @@
                                (currentCategory === 'DYN' && isDynamic(theme)) || 
                                (currentCategory === 'STA' && !isDynamic(theme));
             const matchesSearch = theme.nombre.toLowerCase().includes(searchText);
-            return matchesCat && matchesSearch;
+            return matchesSearch && matchesCat;
         });
 
         if (currentSort === 'AZ') temp.sort((a, b) => a.nombre.localeCompare(b.nombre));
@@ -371,6 +372,7 @@
             const card = document.createElement('div');
             card.className = 'card';
             const imgFileName = fixPath(tema.nombre) + ".webp";
+            // Tombol dan tag sudah dalam bahasa Inggris
             card.innerHTML = `
                 <div class="img-wrapper">
                     <img src="./Images/640/${imgFileName}" loading="lazy" onerror="this.src='https://placehold.co/600x337/161b22/8b949e?text=No+Image'">
