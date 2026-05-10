@@ -1,1 +1,5 @@
-<img width="3464" height="515" alt="titulo" src="https://github.com/user-attachments/assets/8792c0bf-2274-46c0-8b3f-eed26c3a8a99](https://github.com/HattaGG/tema-ps4-hattagamesplus/blob/4257b207e7f83317fb3dc9af6b90dcd517466126/recursos/titulo.png" />
+<img 
+  src="https://raw.githubusercontent.com/HattaGG/tema-ps4-hattagamesplus/4257b207e7f83317fb3dc9af6b90dcd517466126/recursos/titulo.png"
+  alt="titulo"
+  width="100%"
+/>
